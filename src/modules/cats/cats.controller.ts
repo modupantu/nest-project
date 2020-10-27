@@ -3,6 +3,7 @@ import {CatsService} from './cats.service';
 import {Cat} from './interfaces/cat.interface'
 import {CreateCatDto,ListAllEntities,UpdateCatDto} from "./dto/create-cat.dto";
 import { Response } from 'express';
+// @ts-ignore
 import  {ApiBody,ApiParam,ApiQuery,ApiBearerAuth,ApiResponse,ApiTags} from  "@nestjs/swagger"
 @ApiBearerAuth()
 @ApiTags('cat模块接口')
