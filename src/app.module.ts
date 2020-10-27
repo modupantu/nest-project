@@ -3,13 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './modules/cats/cats.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { HelloController } from './modules/hello/hello.controller';
-import { HelloService } from './modules/hello/hello.service';
+
 
 @Module({
   imports: [CatsModule],
-  controllers: [AppController, HelloController],
-  providers: [AppService, HelloService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer): any {
