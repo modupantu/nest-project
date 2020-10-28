@@ -11,6 +11,8 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpExceptionFilter());
   //全局管道
   app.useGlobalPipes(new ValidationPipe())
+  //路由守卫
+  // app.useGlobalGuards()
   // 配置swagger 文档配置
   const swaggerOptions = new DocumentBuilder()
       .setTitle('modupantu api document')
