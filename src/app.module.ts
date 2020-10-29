@@ -1,42 +1,27 @@
-import * as path from "path";
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CatsModule } from './modules/cats/cats.module';
 import { EmailModule } from './modules/email/email.module';
 import {RoleGuardModule} from './modules/role-guard/role-guard.module'
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { MailerModule } from '@nestjs-modules/mailer'
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
-
+import {ConfigModule,ConfigService} from "nestjs-config" // 项目配置集中管理包插件
+import {resolve} from 'path';
+import { StatusMonitorModule } from "nest-status-monitor"; //服务状态监控
+import statusMonitorConfig from './config/statusMonitor'
 @Module({
-
-  imports: [CatsModule,RoleGuardModule,EmailModule,
+  imports: [
+    CatsModule,
+    RoleGuardModule,
+    EmailModule,
+    ConfigModule.load(resolve(__dirname,'config','**/!(*.d).{ts,js}')),
+    StatusMonitorModule.setUp(statusMonitorConfig),
     MailerModule.forRootAsync({
-      useFactory:()=>({
-        transport:{
-          host: "smtp.yeah.net",
-          port: "465",
-          auth: {
-            user: "caoruichun@yeah.net",
-            pass: "DHDNJARCROMLJAQN"
-          }
-        },
-        defaults:{
-          from:"'nest-modules'<caoruichun@yeah.net>",
-        },
-        template:{
-          dir: path.join(__dirname,'./template/email'),
-          adapter:new PugAdapter(),
-          options:{
-            strict:true
-          }
-        }
-      })
+      useFactory:(config:ConfigService)=>config.get('email'),
+      inject:[ConfigService]
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer): any {
