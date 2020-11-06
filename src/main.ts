@@ -10,7 +10,7 @@ async function bootstrap() {
   // 全局过滤器
   // app.useGlobalFilters(new HttpExceptionFilter());
   //全局管道
-  app.useGlobalPipes(new ValidationPipe())
+  // app.useGlobalPipes(new ValidationPipe())
   //路由守卫
   // app.useGlobalGuards()
   // 配置swagger 文档配置
@@ -23,6 +23,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app,swaggerOptions);
   SwaggerModule.setup('doc',app,document);
   //===配置swagger end===
+
   await app.listen(3000);
 }
 bootstrap();

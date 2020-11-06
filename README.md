@@ -126,5 +126,9 @@ $ nest g service cats
 
 ```
 ## 模块
+$ nest g module cats
 
+## 健康检查
+- src\config\statusMonitor.ts
 
+## jwt

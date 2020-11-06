@@ -7,12 +7,14 @@ import { MailerModule } from '@nestjs-modules/mailer'
 import {ConfigModule,ConfigService} from "nestjs-config" // 项目配置集中管理包插件
 import {resolve} from 'path';
 import { StatusMonitorModule } from "nest-status-monitor"; //服务状态监控
-import statusMonitorConfig from './config/statusMonitor'
+import { AuthModule } from './modules/auth/auth.module';
+import statusMonitorConfig from './config/statusMonitor'; // 服务状态监控配置
 @Module({
   imports: [
     CatsModule,
     RoleGuardModule,
     EmailModule,
+    AuthModule,
     ConfigModule.load(resolve(__dirname,'config','**/!(*.d).{ts,js}')),
     StatusMonitorModule.setUp(statusMonitorConfig),
     MailerModule.forRootAsync({
